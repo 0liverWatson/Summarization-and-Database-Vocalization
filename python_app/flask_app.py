@@ -10,7 +10,7 @@ conn = create_connection(database)
 
 @app.route("/" , methods=["GET"])
 def home():
-    return "Running FLask server"
+    return "Running Flask server"
 
 @app.route("/tables", methods=["GET"])
 def get_tables():
@@ -18,11 +18,10 @@ def get_tables():
 
     
     with conn:
-        print("Tables:")
+        
         tbl = list_tables(conn)
-    
-    
-        return json.dumps(tbl)
+        print("Total Tables:", len(tbl))
+        return json.dumps({"tables":tbl})
 
 
 

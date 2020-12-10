@@ -19,6 +19,5 @@ def list_tables(conn):
     cur.execute("SELECT name FROM sqlite_master WHERE type='table';")
     
     rows = cur.fetchall()
-
     
-    return rows
+    return [row[0] for row in rows]
