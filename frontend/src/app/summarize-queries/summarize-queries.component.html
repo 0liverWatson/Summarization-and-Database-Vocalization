@@ -1,38 +1,33 @@
-
- <mat-toolbar color="primary">
+<mat-toolbar color="primary">
   <button mat-button disabled>
-    <img class="jpg-icon"  src="../../../../assets/img/owls.jpg" 
-        style="max-width:    100%; min-width: 100%;">
+    <img class="jpg-icon" src="../../../../assets/img/owls.jpg" style="max-width:    100%; min-width: 100%;">
   </button>
   Summarization and Database Vocalization
-  </mat-toolbar>
+</mat-toolbar>
 
 
 <mat-grid-list cols="3" rowHeight="100px">
-  <mat-grid-tile
-      [colspan]="1"
-      [rowspan]="2">
-      <mat-form-field appearance="fill">
-        <mat-label>Select Tables</mat-label>
-        <mat-select>
-          <mat-option>None</mat-option>
-          <mat-option *ngFor="let tname of tables" [value]="tname">{{tname}}</mat-option>
-        </mat-select>
-      </mat-form-field>
+  <mat-grid-tile [colspan]="1" [rowspan]="2">
+    <mat-form-field appearance="fill">
+      <mat-label>Select Tables</mat-label>
+      <mat-select>
+        <mat-option>None</mat-option>
+        <mat-option *ngFor="let tname of tables" [value]="tname">{{tname}}</mat-option>
+      </mat-select>
+    </mat-form-field>
   </mat-grid-tile>
 
-  <mat-grid-tile
-  [colspan]="1"
-  [rowspan]="2">
-  <mat-radio-group aria-label="Select an option">
-    <mat-radio-button value="1">Bert</mat-radio-button>
-    <mat-radio-button value="2">Pegasus</mat-radio-button>
-  </mat-radio-group>
+  <mat-grid-tile [colspan]="1" [rowspan]="2">
+    <mat-radio-group aria-label="Select an option">
+      <mat-radio-button value="1">Bert</mat-radio-button>
+      <mat-radio-button value="2">Pegasus</mat-radio-button>
+    </mat-radio-group>
   </mat-grid-tile>
 
-  <mat-grid-tile
-  [colspan]="1"
-  [rowspan]="2">
-  <button mat-button>Voice Output<mat-icon svgIcon="VoiceOutput"></mat-icon></button>
+  <mat-grid-tile [colspan]="1" [rowspan]="2">
+    <button mat-button><img src="./../../assets/listening.png"></button>
+  </mat-grid-tile>
+  <mat-grid-tile [colspan]="1" [rowspan]="2">
+    {{ listeningText }}
   </mat-grid-tile>
 </mat-grid-list>
