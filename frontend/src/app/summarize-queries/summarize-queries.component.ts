@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { MatSelectChange } from '@angular/material/select';
 import spoken from "../../assets/spoken.js";
 
 @Component({
@@ -12,14 +13,15 @@ export class SummarizeQueriesComponent implements OnInit {
   constructor(private http: HttpClient) { }
 
   tables: string[];
+  contentTypes: string[] = ['Rows', 'Columns', 'Headers']
   listeningText: string;
+  selectedTable: string;
+  selectedQueryType: string;
 
   ngOnInit(): void {
     this.getTableData();
 
-    this.tables = ['Table1', 'Table2', 'Table3', 'Table4'];
-
-    spoken.say('Hello, Ask Something').then(speech => {
+    spoken.say('Hello, Select table from dropdown to summarize').then(speech => {
       spoken.listen().then(transcript => {
         console.log("Answer: " + transcript);
         this.listeningText = transcript;
@@ -41,32 +43,32 @@ export class SummarizeQueriesComponent implements OnInit {
       return _new;
     };
 
-    // Setup Listener Events
-    spoken.listen.on.partial(transcript => {
-      transcript = transcript.toLowerCase(); if (transcript.includes("laura") || transcript.includes("elora") || transcript.includes("alora") || transcript.includes("ellora") || transcript.includes("allure")) {
-        var arr = transcript.split('laura').join(',').split('elora').join(',').split('ellora').join(',').split('alora').join(',').split('allure').join(',').split(',')
-        transcript = createNewString(transcript, arr[arr.length - 1]);
-        console.log("Captured Transcript: " + transcript);
-      } //Here we could send to the chatbot...
-    });
+    // // Setup Listener Events
+    // spoken.listen.on.partial(transcript => {
+    //   transcript = transcript.toLowerCase(); if (transcript.includes("laura") || transcript.includes("elora") || transcript.includes("alora") || transcript.includes("ellora") || transcript.includes("allure")) {
+    //     var arr = transcript.split('laura').join(',').split('elora').join(',').split('ellora').join(',').split('alora').join(',').split('allure').join(',').split(',')
+    //     transcript = createNewString(transcript, arr[arr.length - 1]);
+    //     console.log("Captured Transcript: " + transcript);
+    //   } //Here we could send to the chatbot...
+    // });
 
-    spoken.listen.on.end(this.continueCapture);
-    spoken.listen.on.error(this.continueCapture);
+    // spoken.listen.on.end(this.continueCapture);
+    // spoken.listen.on.error(this.continueCapture);
 
   }
 
-  startCapture() {
-    spoken.listen({ continuous: true }).then(transcript =>
-      console.log('Started Listening')
-    ).catch(e => true);
-  }
+  // startCapture() {
+  //   spoken.listen({ continuous: true }).then(transcript =>
+  //     console.log('Started Listening')
+  //   ).catch(e => true);
+  // }
 
-  async continueCapture() {
-    await spoken.delay(1);
-    spoken.listen.stop();
-    console.log('Stopped Listening');
-    if (spoken.recognition.continuous) this.startCapture();
-  }
+  // async continueCapture() {
+  //   await spoken.delay(1);
+  //   spoken.listen.stop();
+  //   console.log('Stopped Listening');
+  //   if (spoken.recognition.continuous) this.startCapture();
+  // }
 
   stopCapture() {
     spoken.recognition.continuous = false;
@@ -77,6 +79,31 @@ export class SummarizeQueriesComponent implements OnInit {
     this.http.get('assets/tables.json').subscribe(data => {
       this.tables = data['tables'];
     });
+  }
+
+  selectedValue(event: MatSelectChange) {
+    this.selectedTable = event.value;
+    console.log(event.value);
+  }
+
+  selectedQueryValue(event: MatSelectChange) {
+    this.selectedQueryType = event.value;
+    console.log(event.value);
+  }
+
+  getSummarizedOutput(event) {
+    
+    let data = "You have selected " + this.selectedTable + "and query type" + this.selectedQueryType;
+    if (this.selectedTable) {
+      // Call the endpoint and assign it to spoken ( this.http.get(url).subscribe(data))
+    } else {
+      data = "Please select any table from dropdown to summarize";
+    }
+
+    spoken.say(data).then (transcript =>
+      console.log('Started Listening'),
+      this.listeningText = data,
+    ).catch(e => true);
   }
 
 }
