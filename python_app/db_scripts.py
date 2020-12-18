@@ -21,3 +21,38 @@ def list_tables(conn):
     rows = cur.fetchall()
     
     return [row[0] for row in rows]
+
+
+def row_count(conn, tables, min_count = None):
+    curr = conn.cursor()
+    lst = []
+    for t in tables:
+        curr.execute("SELECT COUNT(1) FROM " + t )
+
+        r = curr.fetchall()[0][0]
+        lst.append({
+            "table_name" : t,
+            "rows" : r
+        })
+
+    print(lst[0])
+    if min_count:
+        lst = [x for x in lst if x["rows"] > min_count]
+
+    return lst
+
+
+def get_row_column_count(conn, table):
+    curr = conn.cursor()
+    curr.execute("SELECT COUNT(1) FROM " + table )
+    r = curr.fetchall()[0][0]
+    
+
+    curr.execute("pragma table_info(ABC_Amsterdam)")
+    c = curr.fetchall()
+
+    return {
+        "rows" : r,
+        "cols" : len(c)
+    }
+
