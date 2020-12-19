@@ -62,5 +62,17 @@ def get_table_row_col_count():
         return json.dumps(tbl)
 
 
+@app.route("/tablesData", methods=["GET"])
+@cross_origin(origin='*')
+def get_tabledata():
+    tbl = request.args.get('tbl')
+    conn = create_connection(database)
+    
+    with conn:
+        
+        tbl = get_table_data(conn, tbl)
+        return json.dumps({"tables":tbl})
+
+
 
 app.run()

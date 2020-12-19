@@ -1,6 +1,6 @@
 <mat-toolbar color="primary">
   <button mat-button disabled>
-    <img class="jpg-icon" src="../../../../assets/img/owls.jpg" style="max-width:    100%; min-width: 100%;">
+    <img class="jpg-icon" src="../../../../assets/logo.png" style="height: 64px;">
   </button>
   Summarization and Database Vocalization
 </mat-toolbar>
@@ -37,7 +37,20 @@
   <mat-grid-tile [colspan]="1" [rowspan]="2">
     <button  (click)="getSummarizedOutput($event)"><img src="./../../assets/listening.png"></button>
   </mat-grid-tile>
-  <mat-grid-tile [colspan]="4" [rowspan]="2">
-    {{ listeningText }}
-  </mat-grid-tile>
+
 </mat-grid-list>
+
+<table class="summary">
+  <thead>
+    <tr>      
+      <th></th>     
+      <th *ngFor="let head of columnNames">{{head}}</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let item of rowsData; let i = index"> 
+      <td>{{ i + 1 }}</td>          
+      <td *ngFor="let list of item">{{list}}</td>
+    </tr>
+  </tbody>
+</table>

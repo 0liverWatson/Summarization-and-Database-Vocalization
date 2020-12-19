@@ -9,6 +9,7 @@ import {MatButtonModule} from '@angular/material/button';
 import {MatSelectModule} from '@angular/material/select';
 import {MatGridListModule} from '@angular/material/grid-list';
 import {MatRadioModule} from '@angular/material/radio';
+import {MatTableModule} from '@angular/material/table';
 import { MatIconModule } from '@angular/material/icon';
 import { HttpClientModule } from '@angular/common/http';
 import { SummarizeQueriesComponent } from './summarize-queries/summarize-queries.component';
@@ -25,6 +26,7 @@ import { SummarizeQueriesComponent } from './summarize-queries/summarize-queries
     AppRoutingModule,
     MatToolbarModule,
     MatButtonModule,
+    MatTableModule,
     MatSelectModule,
     MatGridListModule,
     MatRadioModule,

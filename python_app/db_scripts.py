@@ -56,3 +56,16 @@ def get_row_column_count(conn, table):
         "cols" : len(c)
     }
 
+
+def get_table_data(conn, table):
+    curr = conn.cursor()
+    curr.execute("SELECT * from " + table )
+
+    rows = curr.fetchall()
+    names =  [d[0] for d in curr.description]
+
+    return {
+        "rowsData" :rows,
+        "columnNames": names
+    }
+

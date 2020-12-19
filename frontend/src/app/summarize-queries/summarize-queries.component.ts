@@ -18,12 +18,14 @@ export class SummarizeQueriesComponent implements OnInit {
   selectedTable: string;
   selectedQueryType: string;
 
+  columnNames: string[];
+  rowsData: string[];
+
   table_flag: boolean;
   continue_flag: boolean;
   summary_flag: boolean;
 
   ngOnInit(): void {
-    debugger;
     this.getTableData();
     this.table_flag = false;
     this.continue_flag = false;
@@ -131,6 +133,7 @@ export class SummarizeQueriesComponent implements OnInit {
   getTableData() {
     // this.http.get('http://localhost:5000/tables').subscribe(data => {
     this.http.get('http://127.0.0.1:5000/table_min_row?min=500').subscribe(data => {
+      console.log(data);
       this.tables = data['tables'];
     });
   }
@@ -146,11 +149,19 @@ export class SummarizeQueriesComponent implements OnInit {
       
 
       this.http.get('http://127.0.0.1:5000/table_row_col_count?tbl='+this.selectedTable).subscribe(data => {
+        console.log(data);
         // debugger;
-        var str = 'You have selected table ' + tbl_name + '. This table has ' + data.rows + ' rows and ' + data.cols + ' columns. Would you like to analyze further?'
+        var str = 'You have selected table ' + tbl_name + '. This table has ' + data['rows'] + ' rows and ' + data['cols'] + ' columns. Would you like to analyze further?'
         spoken.say(str).then(speech => {});
         
         this.startCapture();
+      });
+
+      this.http.get('http://127.0.0.1:5000/tablesData?tbl='+this.selectedTable).subscribe(data => {
+        let tableData = data['tables'];
+        this.columnNames = tableData?.columnNames;
+        this.rowsData = tableData?.rowsData;
+        console.log(data);
       });
     }
   }
